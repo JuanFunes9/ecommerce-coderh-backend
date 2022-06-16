@@ -1,0 +1,33 @@
+[
+	{
+		"productos": [
+			{
+				"title": "Globo terraqueo",
+				"price": 420.23,
+				"desc": "Ten el mundo en tus manos",
+				"cod": "abc125",
+				"thumbnail": "https://cdn3.iconfinder.com/data/icons/vol-3/128/globe-256.png",
+				"timeStamp": "2022-06-16 12:27:36",
+				"stock": 127,
+				"id": 3
+			},
+			{
+				"title": "Cuaderno",
+				"price": 123.45,
+				"desc": "Sirve para escribir cosas",
+				"cod": "abc127",
+				"thumbnail": "https://cdn2.iconfinder.com/data/icons/scenarium-vol-2-1/128/040_rules_book_do_not_pros_cons_handbook-256.png",
+				"stock": 180,
+				"timeStamp": "2022-06-16 12:27:36",
+				"id": 5
+			}
+		],
+		"timeStamp": "2022-06-16 12:37:35",
+		"id": 1
+	},
+	{
+		"productos": [],
+		"timeStamp": "2022-06-16 12:38:18",
+		"id": 2
+	}
+]
