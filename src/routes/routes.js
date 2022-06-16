@@ -44,21 +44,26 @@ router.post( '/api/productos/', ( req, res ) => {
 
 //4) Edita un producto segun su id: (disponible para admins)
 router.put( '/api/productos/:id', ( req, res ) => {
+  //a)obtenemos el id y el poroducto:
   const id = req.params.id;
   const product = req.body;
+  //b) asignamos el id y actualizamos el timeStamp:
+  const date = new Date();
+  product.timeStamp = date.toISOString().split('T')[0] + ' ' + date.toLocaleTimeString();
   product.id = id;
+  //c) traemos el array de productos:
   const read = fs.readFileSync( './src/productos.txt', 'utf-8' );
   const products = JSON.parse( read );
-
+  //d) buscamos el index del producto a editar:
   const idx = products.findIndex( p => p.id == id );
 
   if( idx === -1 ){
-      res.send( 'El producto que desea editar no existe.' )
+      res.send({  error :'El producto que desea editar no existe.' })
   } else {
       products.splice( idx, 1, product );
 
-      fs.writeFileSync( './productos.txt', JSON.stringify( products, null, '\t' ) );
-      res.json( product );
+      fs.writeFileSync( './src/productos.txt', JSON.stringify( products, null, '\t' ) );
+      res.json( products );
   }
 });
 
