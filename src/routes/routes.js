@@ -63,7 +63,7 @@ router.put( '/api/productos/:id', ( req, res ) => {
       products.splice( idx, 1, product );
 
       fs.writeFileSync( './src/productos.txt', JSON.stringify( products, null, '\t' ) );
-      res.json( products );
+      res.json( product );
   }
 });
 
