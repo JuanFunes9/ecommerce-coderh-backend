@@ -1,10 +1,12 @@
 //Imports
 const express = require( 'express' );
+const cors = require( 'cors' );
 
 //inicializar express
 const app = express();
 
 //Settings
+app.use( cors() );
 const PORT = process.env.PORT || 8080;
 app.use( express.json() );
 app.use( express.urlencoded({ extended: true }) );

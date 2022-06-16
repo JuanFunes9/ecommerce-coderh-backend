@@ -152,18 +152,29 @@ router.post( '/api/carrito/:id/productos', ( req, res ) => {
 
 //5) elimina un producto del carrito segun el id del producto:
 router.delete( '/api/carrito/:id/productos/:id_prod', ( req, res ) => {
+  //a) obtener el ID del carrito y el ID del producto a elmiminar:
   const idCarrito = Number( req.params.id );
   const idProd = Number( req.params.id_prod );
+  //b) traer el array de carritos:
   const read = fs.readFileSync( './src/carritos.txt', 'utf-8' );
   const carritos = JSON.parse( read );
-
+  //c) obtener el carrito por su ID en el array de carritos:
   const carrito = carritos.find( prod => prod.id === idCarrito );
   if ( carrito == undefined ){
       res.send({ error: 'Carrito no encontrado' });
   } else {
-    const idx = carritos.findIndex( p => p.id == id );
+    //d) obtener el index del producto en el array de productos del carrito
+    const idx = carrito.productos.findIndex( p => p.id == idProd );
 
-      res.json( carrito.productos );
+    if( idx === -1 ){
+      res.send({ error: 'Producto no encontrado' })
+    } else {
+      //e) Eliminar el producto:
+      carrito.productos.splice( idx, 1 );
+
+      fs.writeFileSync( './src/carritos.txt', JSON.stringify( carritos, null, '\t' ) );
+      res.send( `Se elimino el producto con id: ${ idProd } del carrito ${ idCarrito }` );
+    }
   }
 });
 
