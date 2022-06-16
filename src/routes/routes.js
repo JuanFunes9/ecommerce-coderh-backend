@@ -80,7 +80,7 @@ router.delete( '/api/productos/:id', ( req, res ) => {
   } else {
       products.splice( idx, 1 );
 
-      fs.writeFileSync( './productos.txt', JSON.stringify( products, null, '\t' ) );
+      fs.writeFileSync( './src/productos.txt', JSON.stringify( products, null, '\t' ) );
       res.json( `Se elimino el producto con id: ${ id }` );
   }
 });
