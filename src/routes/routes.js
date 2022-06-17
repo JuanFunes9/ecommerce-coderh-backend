@@ -45,7 +45,7 @@ router.post( '/api/productos/', ( req, res ) => {
 //4) Edita un producto segun su id: (disponible para admins)
 router.put( '/api/productos/:id', ( req, res ) => {
   //a)obtenemos el id y el poroducto:
-  const id = req.params.id;
+  const id = Number( req.params.id );
   const product = req.body;
   //b) asignamos el id y actualizamos el timeStamp:
   const date = new Date();
