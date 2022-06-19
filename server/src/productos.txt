@@ -55,8 +55,8 @@
 		"desc": "Mouse gamer rgb",
 		"cod": "abc128",
 		"thumbnail": "https://cdn1.iconfinder.com/data/icons/hardware-and-devices/64/Hardware_devices_computer_mouse-512.png",
-		"stock": 20,
-		"timeStamp": "2022-06-16 20:33:10",
-		"id": "6"
+		"stock": 26,
+		"timeStamp": "2022-06-19 14:07:48",
+		"id": 6
 	}
 ]

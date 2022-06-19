@@ -1,6 +1,9 @@
 //Imports
 const express = require( 'express' );
 const cors = require( 'cors' );
+//import routes sheet:
+const productsRoutes = require( './routes/productsRoutes' );
+const carritosRoutes = require( './routes/carritosRoutesRoutes' );
 
 //inicializar express
 const app = express();
@@ -13,7 +16,8 @@ app.use( express.urlencoded({ extended: true }) );
 
 //Routes
 
-app.use( require( './routes/routes' ) );
+app.use( '/api/productos', productsRoutes );
+app.use( '/api/carrito', carritosRoutes );
 
 //Server listening
 const server = app.listen( PORT, () => {
