@@ -18,6 +18,12 @@ app.use( express.urlencoded({ extended: true }) );
 
 app.use( '/api/productos', productsRoutes );
 app.use( '/api/carrito', carritosRoutes );
+app.get( '/*', (req,res) => {
+    res.json({
+        error: -2,
+        desc: "Ruta no implementada"
+    })
+} )
 
 //Server listening
 const server = app.listen( PORT, () => {
