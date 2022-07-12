@@ -78,5 +78,15 @@
 		"stock": 2,
 		"timeStamp": "2022-06-22 1:27:46",
 		"id": 8
+	},
+	{
+		"title": "Mouse Razr",
+		"price": 123.45,
+		"desc": "Mouse gamer rgb",
+		"cod": "abc128",
+		"thumbnail": "https://cdn1.iconfinder.com/data/icons/hardware-and-devices/64/Hardware_devices_computer_mouse-512.png",
+		"stock": 20,
+		"timeStamp": "2022-07-12 21:02:28",
+		"id": 9
 	}
 ]
