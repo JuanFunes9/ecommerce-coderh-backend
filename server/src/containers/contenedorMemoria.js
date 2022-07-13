@@ -1,44 +1,56 @@
-const fs = require('fs');
+// const fs = require('fs');
 
-class ContenedorMemory {
+class ContenedorMemoria {
 
-    constructor() {
-        this.data = []
+	constructor() {
+		this.data = []
+	}
+
+	async getAll() {
+		return this.data
+	}
+
+	async getById(id) {
+		const objID = this.data.find(obj => obj.id == id);
+		if ( objID == undefined ){
+      return({ error: 'Producto no encontrado' });
+    } else {
+      return objID;
     }
+	}
 
-    async save(obj) {
-        obj['id'] = this.data.length + 1;
-        this.data.push(obj)
+	async save(obj) {
+		const date = new Date();
+    obj.timeStamp = date.toISOString().split('T')[0] + ' ' + date.toLocaleTimeString();
 
-        return obj
-    }
+		obj.id = this.data.length + 1;
 
-    async getByID(id) {
-        const objID = this.data.find(obj => obj.id == id)
-        return objID
-    }
+		this.data.push(obj);
 
-    async editById(obj , id) {
-        obj['id'] = id
-        const idx = this.getAll().findIndex(p => p.id === id)
-        this.data.splice(idx , 1 , obj )
+		return obj;
+	}
 
-        return obj
-    }
+	async editById(id, obj) {
+		obj.id = Number(id);
+		const idx = this.data.findIndex( p => p.id == obj.id );
+		this.data.splice( idx, 1, obj );
+		return obj;
+	}
 
-    async getAll() {
-        return this.data
-    }
+	async deleteById(id) {
+		const idx = this.data.findIndex(obj => obj.id == id);
+		if ( idx === -1 ){
+			return( { error : 'El producto que desea eliminar no existe.' } )
+		} else {
+			this.data.splice(idx, 1);
+			return( { data: `Se elimino el producto con id: ${ id }` } );
+		}
+	}
 
-    async deleteByID(id) {
-        const idx = this.data.findIndex(obj => obj.id == id)
-        this.data.splice(idx, 1)
-    }
-
-    async deleteAll() {
-        this.data = []
-    }
+	async deleteAll() {
+		this.data = []
+	}
 
 }
 
-module.exports = ContenedorMemory;
+module.exports = ContenedorMemoria;

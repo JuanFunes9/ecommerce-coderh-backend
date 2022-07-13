@@ -26,23 +26,23 @@ class ContenedorFile {
     }
   }
 
-  async newProduct( product ){
+  async save( obj ){
     const read = fs.readFileSync( this.textJson, 'utf-8' );
     const products = JSON.parse( read );
 
     const date = new Date();
-    product.timeStamp = date.toISOString().split('T')[0] + ' ' + date.toLocaleTimeString();
+    obj.timeStamp = date.toISOString().split('T')[0] + ' ' + date.toLocaleTimeString();
 
     const productsId = products.map( p => Number(p.id) );
-    product.id = Math.max( ...productsId ) + 1;
+    obj.id = Math.max( ...productsId ) + 1;
 
-    products.push( product );
+    products.push( obj );
 
     fs.writeFileSync( this.textJson, JSON.stringify( products, null, '\t' ) );
-    return product;
+    return obj;
   }
 
-  async editProduct( id, product ){
+  async editById( id, product ){
     const date = new Date();
     product.timeStamp = date.toISOString().split('T')[0] + ' ' + date.toLocaleTimeString();
     product.id = Number(id);
@@ -62,7 +62,7 @@ class ContenedorFile {
     }
   }
 
-  async deleteProduct( id ){
+  async deleteById( id ){
     const read = fs.readFileSync( this.textJson, 'utf-8' );
     const products = JSON.parse( read );
 

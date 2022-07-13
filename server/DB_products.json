@@ -1,0 +1,32 @@
+[
+	{
+		"title": "Mouse Redragon editado 2",
+		"price": 123.45,
+		"desc": "Mouse gamer rgb",
+		"cod": "abc128",
+		"thumbnail": "https://cdn1.iconfinder.com/data/icons/hardware-and-devices/64/Hardware_devices_computer_mouse-512.png",
+		"stock": 26,
+		"timeStamp": "2022-07-12 1:14:53",
+		"id": 1
+	},
+	{
+		"title": "calculadora",
+		"price": 234.56,
+		"desc": "Sirve para calcular",
+		"cod": "abc124",
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/seo-43/512/Calcolator-256.png",
+		"timeStamp": "2022-06-16 12:27:36",
+		"stock": 89,
+		"id": 2
+	},
+	{
+		"title": "Globo terraqueo",
+		"price": 420.23,
+		"desc": "Ten el mundo en tus manos",
+		"cod": "abc125",
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/vol-3/128/globe-256.png",
+		"timeStamp": "2022-06-16 12:27:36",
+		"stock": 127,
+		"id": 3
+	}
+]

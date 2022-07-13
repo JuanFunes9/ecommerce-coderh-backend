@@ -4,7 +4,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 class ContenedorMongo {
 
   constructor(uri, model) {
-    this.model = model
+    this.model = model;
     this.mongo = mongoose.connect(uri, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
@@ -13,79 +13,51 @@ class ContenedorMongo {
       .catch(err => console.log(err));
   }
 
+  async save(obj) {
+    const newProduct = new this.model(obj);
+    await newProduct.save();
 
-  getAll(){
-    const read = fs.readFileSync( './src/productos.txt', 'utf-8' );
-    const products = JSON.parse( read );
-
-    return products;
+    return newProduct;
   }
 
-  getById( id ){
-    const read = fs.readFileSync( './src/productos.txt', 'utf-8' );
-    const products = JSON.parse( read );
-
-    const product = products.find( prod => prod.id === id );
-
-    if ( product == undefined ){
-      return({ error: 'Producto no encontrado' });
-    } else {
-      return( product );
-    }
+  async getById(id) {
+    return this.model.find({ _id: new ObjectId(id) })
   }
 
-  newProduct( product ){
-    const read = fs.readFileSync( './src/productos.txt', 'utf-8' );
-    const products = JSON.parse( read );
-
-    const date = new Date();
-    product.timeStamp = date.toISOString().split('T')[0] + ' ' + date.toLocaleTimeString();
-
-    const productsId = products.map( p => p.id );
-    product.id = Math.max( ...productsId ) + 1;
-
-    products.push( product );
-
-    fs.writeFileSync( './src/productos.txt', JSON.stringify( products, null, '\t' ) );
-    return product;
+  async getAll(id) {
+    return this.model.find({})
   }
 
-  editProduct( id, product ){
-    const date = new Date();
-    product.timeStamp = date.toISOString().split('T')[0] + ' ' + date.toLocaleTimeString();
-    product.id = id;
+  async editById(id, obj) {
+    console.log('UPDATE');
+    const objUpdated = await this.model.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: obj }
+    );
 
-    const read = fs.readFileSync( './src/productos.txt', 'utf-8' );
-    const products = JSON.parse( read );
-
-    const idx = products.findIndex( p => p.id == id );
-
-    if( idx === -1 ){
-      return({  error :'El producto que desea editar no existe.' })
-    } else {
-      products.splice( idx, 1, product );
-
-      fs.writeFileSync( './src/productos.txt', JSON.stringify( products, null, '\t' ) );
-      return( product );
-    }
+    return objUpdated;
   }
 
-  deleteProduct( id ){
-    const read = fs.readFileSync( './src/productos.txt', 'utf-8' );
-    const products = JSON.parse( read );
-
-    const idx = products.findIndex( p => p.id == id );
-
-    if( idx === -1 ){
-      return( { error : 'El producto que desea eliminar no existe.' } )
-    } else {
-      products.splice( idx, 1 );
-
-      fs.writeFileSync( './src/productos.txt', JSON.stringify( products, null, '\t' ) );
-      return( { data: `Se elimino el producto con id: ${ id }` } );
-    }
+  async deleteById(id) {
+    const userDelete = await this.model.deleteOne({ _id: new ObjectId(id) });
+    return true;
   }
 
+  async addToCart(id, obj){
+    const objUpdated = await this.model.updateOne(
+      { _id: new ObjectId(id) },
+      { $addToSet: {productos : obj} }
+    );
+    return objUpdated;
+  }
+
+  async delFromCart( id, idProd ){
+    const objUpdated = await this.model.updateOne(
+      { _id: new ObjectId(id) },
+      { $pull: {productos : { id: Number(idProd) }} }
+    );
+    return objUpdated;
+  }
 }
 
 module.exports = ContenedorMongo;

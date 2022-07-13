@@ -1,22 +1,22 @@
 const router = require( 'express' ).Router();
 
-const Contenedor = require( '../containers/contenedorFile' );
-const products = new Contenedor( './src/productos.txt' );
+const FactoryDAO = require( '../DAO/index' );
+const DAO = FactoryDAO();
 
 //1) Devuelve todos los productos (disponible para usuarios y admins)
 router.get( '/', ( req, res ) => {
-  products.getAll().then( data => res.json( data ) )
+  DAO.product.getAll().then( data => res.json( data ) )
 });
 
 //2) Devuelve un producto segun su id (disponible para usuarios y admins)
 router.get( '/:id', ( req, res ) => {
-  products.getById( req.params.id ).then( data => res.json( data ) )
+  DAO.product.getById( req.params.id ).then( data => res.json( data ) )
 });
 
 //3) Recibe y agrega un producto. Devuelve el producto agregado y su ID asignada (disponible para admins)
 router.post( '/', ( req, res ) => {
   if( req.headers.admin ){
-    products.newProduct( req.body ).then( data => res.json( data ) )
+    DAO.product.save( req.body ).then( data => res.json( data ) )
   }
   else{
     res.json({
@@ -29,7 +29,7 @@ router.post( '/', ( req, res ) => {
 //4) Edita un producto segun su id: (disponible para admins)
 router.put( '/:id', ( req, res ) => {
   if( req.headers.admin ){
-    products.editProduct( req.params.id, req.body )
+    DAO.product.editById( req.params.id, req.body )
       .then( data => res.json( data ) )
   }
   else{
@@ -43,7 +43,7 @@ router.put( '/:id', ( req, res ) => {
 //5) Elimina un producto segun su id: (disponible para admins)
 router.delete( '/:id', ( req, res ) => {
   if( req.headers.admin ){
-    products.deleteProduct( req.params.id ).then( data => res.json( data ) )
+    DAO.product.deleteById( req.params.id ).then( data => res.json( data ) )
   }
   else{
     res.json({
